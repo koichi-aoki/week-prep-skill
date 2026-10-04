@@ -1,4 +1,4 @@
-# week-prep：来週の準備をAIに先にやってもらうスキル（Claude Code用）
+# week-prep：来週の準備をAIに先にやってもらうスキル（Claude Code・Codex用）
 
 金曜の夜に、来週金曜までの仕事の下準備を、AIエージェントに先回りで終わらせてもらうためのスキルです。
 
@@ -16,10 +16,10 @@
 
 ## 必要なもの
 
-- Claude Code
+- Claude Code または Codex
 - 予定・チャット・メールなどを読むためのつながり（どれか1つからでも使えます）
   - 例：Microsoft 365（Outlook・Teams・SharePoint）、Google Workspace（Gmail・カレンダー・ドライブ）、Slack、Notion など
-  - claude.ai のコネクタ、またはMCPサーバーでつなぎます。何もつながっていなくても、来週の予定を貼り付ければ動きます
+  - Claude Codeなら claude.ai のコネクタやMCPサーバー、CodexならMCPサーバーでつなぎます。何もつながっていなくても、来週の予定を貼り付ければ動きます
 - Python 3（ボードのHTMLを組み立てるのに使います。なければAIが別の方法で作ります）
 
 会社の情報をAIに読ませる前に、社内のAI利用のルールを確認してください。
@@ -27,21 +27,23 @@
 ## 入れ方
 
 1. このリポジトリをZIPでダウンロードします（GitHubの「Code」→「Download ZIP」）
-2. ZIPファイルを置いたフォルダでClaude Codeを開き、こう伝えます
+2. ZIPファイルを置いたフォルダでClaude Code（またはCodex）を開き、こう伝えます
 
    > ダウンロードしたZIPのスキルを入れて、セットアップをお願いします
 
-   Claude Codeが、ZIPの中の `INSTALL_FOR_CLAUDE.md` に沿って `week-prep` フォルダをスキルの置き場所にコピーし、初回のセットアップを始めます。
+   AIが、ZIPの中の `INSTALL_FOR_AI.md` に沿って `week-prep` フォルダをスキルの置き場所にコピーし、初回のセットアップを始めます。
 
-自分で入れる場合は、`week-prep` フォルダを次のどちらかに置いてください。
+自分で入れる場合は、`week-prep` フォルダを次の場所に置いてください（`~` はホームフォルダ。Windowsなら `C:\Users\<あなた>`）。
 
-- どのフォルダで開いても使う：`~/.claude/skills/week-prep/`（Windowsは `C:\Users\<あなた>\.claude\skills\week-prep\`）
-- このプロジェクトだけで使う：`<プロジェクト>/.claude/skills/week-prep/`
+| | どのフォルダで開いても使う | このプロジェクトだけで使う |
+|---|---|---|
+| Claude Code | `~/.claude/skills/week-prep/` | `<プロジェクト>/.claude/skills/week-prep/` |
+| Codex | `~/.agents/skills/week-prep/` | `<プロジェクト>/.agents/skills/week-prep/` |
 
 ## 使い方
 
 - 初回：「来週の準備をして」と頼むと、まずセットアップが始まります。AIが、つながっているツールを確認し、あなたの名前・役割・任せたい仕事・社内の人の呼び方などを質問して、`week-prep/my-profile.md` を作ります
-- 2回目から：「来週の準備をして」（または `/week-prep`）の一言で、準備ボードができあがり、ブラウザで開きます
+- 2回目から：「来週の準備をして」の一言で、準備ボードができあがり、ブラウザで開きます（Claude Codeなら `/week-prep` でも呼べます）
 - 文面の呼び方や口調を直したら、AIが `my-profile.md` に反映して、次の週から同じ間違いをしなくなります
 
 出力は、既定で作業中のフォルダの `week-prep-output/<来週の月曜の日付>/` に保存されます。
@@ -65,9 +67,9 @@ week-prep/
   assets/sample-board-data.json 見本のデータ（架空の会社・人物）
   assets/profile-template.md    my-profile.md の雛形
   scripts/build_board.py        ボードを組み立てるスクリプト
-INSTALL_FOR_CLAUDE.md           Claude Code向けの導入手順
+INSTALL_FOR_AI.md               Claude Code・Codex向けの導入手順
 ```
 
 ## 作った人
 
-青木晃一（株式会社NINAE）。仕組みの紹介はnoteの記事「金曜の夜に、来週の準備が終わっている。仕事をAIネイティブに変える一番の方法」に書いています。
+青木晃一（株式会社NINAE）。仕組みの紹介はnoteの記事「仕事をAIネイティブに変える一番の方法」に書いています。
