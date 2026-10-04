@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=Inter:wght@500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F5F5F3; --surface:#FFFFFF; --ink:#1D1C1A; --muted:#6A6964; --line:#E2E1DC; --soft:#EDECE8;
+  --accent:#E4461D; --accent-soft:#FCE9E3;
+  --you:#B3261E; --you-soft:#F8E4E2;
+  --made:#1F5FA8; --made-soft:#E2ECF8;
+  --ready:#2F7A4E; --ready-soft:#E3F1E8;
+  --ask:#6B4FA0; --ask-soft:#EEE9F7;
+  --warn:#9A6212; --warn-soft:#F6ECD9;
+  --font:"IBM Plex Sans JP","Hiragino Sans","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+  --num:"Inter","IBM Plex Sans JP",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#151514; --surface:#1E1E1C; --ink:#EDEBE6; --muted:#A3A19A; --line:#34332F; --soft:#2A2926;
+    --accent:#FF6A3D; --accent-soft:#3A2119;
+    --you:#FF8A80; --you-soft:#3B1D1B;
+    --made:#7EB2F0; --made-soft:#1B2A3D;
+    --ready:#6CC592; --ready-soft:#1C3325;
+    --ask:#B9A2EE; --ask-soft:#2B2340;
+    --warn:#E3B062; --warn-soft:#352A17;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#151514; --surface:#1E1E1C; --ink:#EDEBE6; --muted:#A3A19A; --line:#34332F; --soft:#2A2926;
+  --accent:#FF6A3D; --accent-soft:#3A2119;
+  --you:#FF8A80; --you-soft:#3B1D1B;
+  --made:#7EB2F0; --made-soft:#1B2A3D;
+  --ready:#6CC592; --ready-soft:#1C3325;
+  --ask:#B9A2EE; --ask-soft:#2B2340;
+  --warn:#E3B062; --warn-soft:#352A17;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.7;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 72px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.35}
+h1{font-size:28px;font-weight:700;letter-spacing:.02em}
+h2{font-size:19px;font-weight:700;letter-spacing:.03em}
+h3{font-size:14.5px;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--num);font-size:12px;font-weight:600;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+.muted{color:var(--muted)}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums}
+section{display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--c,var(--line));padding-bottom:8px}
+.sec-head .lead{font-size:13px;color:var(--muted);max-width:62ch}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:5px;background:var(--tc-soft);color:var(--tc);white-space:nowrap}
+.t-you{--tc:var(--you);--tc-soft:var(--you-soft)} .t-made{--tc:var(--made);--tc-soft:var(--made-soft)}
+.t-ready{--tc:var(--ready);--tc-soft:var(--ready-soft)} .t-ask{--tc:var(--ask);--tc-soft:var(--ask-soft)}
+.t-warn{--tc:var(--warn);--tc-soft:var(--warn-soft)}
+
+/* header */
+.top{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end}
+.top p{margin-top:6px;max-width:64ch}
+.countdown{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cd{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:0}
+.cd b{display:block;font-family:var(--num);font-size:22px;font-weight:700}
+.cd span{font-size:12px;color:var(--muted)}
+.cd.hot{border-color:var(--accent);background:var(--accent-soft)} .cd.hot b{color:var(--accent)}
+
+/* nav tiles */
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.tile{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:10px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);text-decoration:none;color:var(--ink)}
+.tile:hover{border-color:var(--c)}
+.tile b{font-family:var(--num);font-size:26px;font-weight:700;color:var(--c);line-height:1.1}
+.tile span{font-size:13px;font-weight:700}
+.tile small{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* actions */
+.group{display:flex;flex-direction:column;gap:6px}
+.group-h{display:flex;align-items:baseline;gap:10px;font-weight:700;font-size:14px;padding:4px 2px}
+.group-h .num{color:var(--you)}
+.act{display:grid;grid-template-columns:22px 118px 1fr 220px;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.act input{width:18px;height:18px;accent-color:var(--you);margin-top:2px}
+.act .when{font-family:var(--num);font-size:12.5px;font-weight:600;color:var(--you);line-height:1.5}
+.act .when small{display:block;font-family:var(--font);font-weight:500;color:var(--muted)}
+.act .what{display:flex;flex-direction:column;gap:3px;min-width:0}
+.act .what .t{font-weight:700}
+.act .what .how{font-size:13px}
+.act .what .use{font-size:12px;color:var(--muted)}
+.act .done{font-size:12px;color:var(--muted);border-left:1px solid var(--line);padding-left:12px}
+.act .done b{display:block;color:var(--ink);font-size:11.5px;letter-spacing:.04em}
+.act.is-done{opacity:.5} .act.is-done .t{text-decoration:line-through}
+
+/* made / ready cards */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.card .row{display:grid;grid-template-columns:78px 1fr;gap:8px;font-size:13px}
+.card .row span:first-child{color:var(--muted);font-size:12px}
+.card .state{color:var(--made);font-weight:700}
+.path{display:flex;gap:6px;align-items:center;background:var(--soft);border-radius:6px;padding:4px 6px 4px 8px}
+.path code{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:11.5px;overflow-wrap:anywhere;flex:1;color:var(--ink)}
+.btn{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:2px 10px;cursor:pointer;white-space:nowrap}
+.btn:focus-visible,.chip:focus-visible,.act input:focus-visible,.tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* tables */
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--soft);vertical-align:top;font-size:13px}
+th{font-size:12px;color:var(--muted);font-weight:500;background:var(--soft)}
+tr:last-child td{border-bottom:0}
+td b{font-weight:700}
+
+/* asks */
+.asks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.ask{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ask .h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.ask .who{font-weight:700}
+.ask .meta{font-size:12px;color:var(--muted)}
+.ask .req{font-size:13px}
+.ask pre{margin:0;white-space:pre-wrap;font-family:var(--font);font-size:12.5px;line-height:1.7;background:var(--soft);border-radius:8px;padding:10px 12px;max-height:220px;overflow:auto}
+.sub-h{font-size:14px;font-weight:700;margin-top:4px}
+
+/* improve */
+.imp{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start}
+.imp-col{display:flex;flex-direction:column;gap:8px}
+.imp-col > h3{padding:8px 12px;border-radius:8px;background:var(--ic-soft);color:var(--ic)}
+.imp-col > p{font-size:12.5px;color:var(--muted);padding:0 2px}
+.i-now{--ic:var(--made);--ic-soft:var(--made-soft)} .i-info{--ic:var(--warn);--ic-soft:var(--warn-soft)} .i-perm{--ic:var(--ask);--ic-soft:var(--ask-soft)}
+.ic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:5px;font-size:13px}
+.ic .t{font-weight:700}
+.ic .need{font-size:12px;color:var(--muted)}
+.ic .gain::before{content:"できること　";font-weight:700;color:var(--ic)}
+.ic .where{font-size:12px;color:var(--muted)}
+
+/* focus */
+.focus{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.fc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.fc .no{font-family:var(--num);font-weight:700;color:var(--accent);font-size:13px}
+.fc h3{font-size:14px}
+.fc p{font-size:12.5px;color:var(--muted)}
+.fc .risk{color:var(--ink)} .fc .risk::before{content:"詰まり ";font-weight:700;color:var(--warn)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--pc-soft);color:var(--pc);width:fit-content}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pc)}
+.p-green{--pc:var(--ready);--pc-soft:var(--ready-soft)} .p-amber{--pc:var(--warn);--pc-soft:var(--warn-soft)}
+
+/* week */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 13px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.week{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.day-h{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.day-h b{font-family:var(--num);font-size:17px}
+.day-h span{font-size:12px;color:var(--muted)}
+.day.launch .day-h{background:var(--accent-soft)} .day.launch .day-h span{color:var(--accent);font-weight:700}
+.ev{display:grid;grid-template-columns:4px 1fr;border-bottom:1px solid var(--soft)}
+.ev:last-child{border-bottom:0}
+.ev .bar{background:var(--c)}
+.ev .body{padding:8px 10px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ev .tm{font-family:var(--num);font-size:11.5px;color:var(--muted)}
+.ev .nm{font-size:13px;font-weight:700;line-height:1.45}
+.ev .nt{font-size:12px;color:var(--muted);line-height:1.5}
+.st-you{--c:var(--you)} .st-made{--c:var(--made)} .st-ready{--c:var(--ready)} .st-ask{--c:var(--ask)}
+
+.notes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.notes li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px}
+.notes li b{display:block;margin-bottom:2px}
+footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+
+@media (max-width:1020px){
+  .tiles{grid-template-columns:repeat(3,1fr)}
+  .act{grid-template-columns:22px 104px 1fr}
+  .act .done{grid-column:3;border-left:0;padding-left:0}
+  .imp{grid-template-columns:1fr}
+  .focus{grid-template-columns:repeat(2,1fr)}
+  .week{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .wrap{padding:20px 16px 56px;gap:32px}
+  .top{grid-template-columns:1fr}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .act{grid-template-columns:22px 1fr}
+  .act .when{grid-column:2}
+  .act .what,.act .done{grid-column:2}
+  .cards,.asks,.focus,.week,.notes{grid-template-columns:1fr}
+  h1{font-size:23px}
+}
+@media (prefers-reduced-motion:no-preference){ .chip,.tile{transition:border-color .15s,background .15s} }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="title"></h1>
+      <p class="muted" id="lead"></p>
+    </div>
+    <div class="countdown" id="countdown"></div>
+  </header>
+
+  <nav class="tiles" aria-label="区分" id="tiles"></nav>
+
+  <section id="you" aria-labelledby="h-you">
+    <div class="sec-head" style="--c:var(--you)"><h2 id="h-you">1. あなたが動くこと</h2><span class="lead">何を・いつ・どうやって・何を使うか。終わったらチェック（このブラウザにだけ残ります）</span></div>
+    <div id="actions" style="display:flex;flex-direction:column;gap:18px"></div>
+  </section>
+
+  <section id="made" aria-labelledby="h-made">
+    <div class="sec-head" style="--c:var(--made)"><h2 id="h-made">2. AIが今回作ったもの</h2><span class="lead">すべて未送信・未公開。「状態」に書いた一手間だけで使えます</span></div>
+    <div class="cards" id="madeCards"></div>
+  </section>
+
+  <section id="ready" aria-labelledby="h-ready">
+    <div class="sec-head" style="--c:var(--ready)"><h2 id="h-ready">3. 事前に準備されていたもの</h2><span class="lead">当日そのまま使えるもの。前日に見るのは「当日の一言」の列だけ</span></div>
+    <div class="tbl"><table>
+      <thead><tr><th>もの</th><th>使う日</th><th>誰が・いつ</th><th>場所</th><th>当日の一言</th></tr></thead>
+      <tbody id="readyRows"></tbody>
+    </table></div>
+  </section>
+
+  <section id="ask" aria-labelledby="h-ask">
+    <div class="sec-head" style="--c:var(--ask)"><h2 id="h-ask">4. 他の人に依頼すること</h2><span class="lead">誰に・何を・いつまでに。文面はそのままコピーして送れます（社外は送る前に内容を確認）</span></div>
+    <div class="sub-h">社内</div>
+    <div class="asks" id="asksIn"></div>
+    <div class="sub-h">社外</div>
+    <div class="asks" id="asksOut"></div>
+  </section>
+
+  <section id="improve" aria-labelledby="h-imp">
+    <div class="sec-head" style="--c:var(--accent)"><h2 id="h-imp">5. もっと任せてもらうために</h2><span class="lead">今回できなかったことと、情報・権限があれば実行まで進められること</span></div>
+    <div class="imp" id="improveCols"></div>
+  </section>
+
+  <section aria-labelledby="h-focus">
+    <div class="sec-head"><h2 id="h-focus">今週の重点アクションは達成できるか</h2></div>
+    <div class="focus" id="focus"></div>
+  </section>
+
+  <section aria-labelledby="h-week">
+    <div class="sec-head"><h2 id="h-week">1週間の予定</h2>
+      <div class="filters" role="group" aria-label="表示の切り替え" id="filters"></div>
+    </div>
+    <div class="week" id="week"></div>
+  </section>
+
+  <section aria-labelledby="h-notes">
+    <div class="sec-head"><h2 id="h-notes">気づいた点</h2></div>
+    <ul class="notes" id="notes"></ul>
+  </section>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+/* ---------- データ（build_board.py が差し込む） ---------- */
+const D = __DATA__;
+const ROOT = D.root || "";
+const OWNER = D.meta.owner || "あなた";
+const KEY = "week-prep:" + D.meta.title;
+const ACTIONS = D.actions, MADE = D.made, READY = D.ready, ASKS = D.asks, IMPROVE = D.improve, FOCUS = D.focus;
+const EV = D.events.map(e => [e.day, e.time, e.title, e.status]);
+const DAYS = D.days.map(d => [d.date, d.dow, d.label || "", !!d.hot]);
+const NOTES = D.notes.map(n => [n.t, n.body]);
+const ST = {you:OWNER, made:"AIが準備", ready:"準備済み", ask:"依頼・任せる"};
+/* ---------- 描画 ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+document.getElementById("eyebrow").textContent = D.meta.eyebrow || "";
+document.getElementById("h-you").textContent = "1. " + OWNER + "が動くこと";
+document.getElementById("h-focus").textContent = D.meta.focusTitle || "今週の重点アクションは達成できるか";
+document.getElementById("title").textContent = D.meta.title;
+document.getElementById("lead").textContent = D.meta.lead || "";
+document.getElementById("countdown").innerHTML = (D.meta.countdown || []).map(c =>
+  `<div class="cd ${c.hot ? "hot" : ""}"><b class="num">${esc(c.v)}</b><span>${esc(c.l)}</span></div>`).join("");
+document.getElementById("footer").textContent = (D.meta.footer || "") + (D.meta.folder ? "　詳細：" + D.meta.folder : "");
+const nAct = ACTIONS.reduce((a,g) => a + g.items.length, 0);
+const nImp = IMPROVE.reduce((a,g) => a + g.items.length, 0);
+$("#tiles").innerHTML = [
+  ["#you","var(--you)",nAct,OWNER + "が動く","判断・発言・送信だけ"],
+  ["#made","var(--made)",MADE.length,"AIが作った","資料・表・文面・台本"],
+  ["#ready","var(--ready)",READY.length,"準備済み","当日そのまま使う"],
+  ["#ask","var(--ask)",ASKS.length,"他の人に依頼","文面つきで送るだけ"],
+  ["#improve","var(--accent)",nImp,"任せる範囲を広げる","情報・権限の提案"]
+].map(([h,c,n,l,s]) => `<a class="tile" href="${h}" style="--c:${c}"><b class="num">${n}</b><span>${l}</span><small>${s}</small></a>`).join("");
+
+let done = new Set();
+try { done = new Set(JSON.parse(localStorage.getItem(KEY + ":actions") || "[]")); } catch(e) {}
+$("#actions").innerHTML = ACTIONS.map(g => `
+  <div class="group">
+    <div class="group-h"><span>${esc(g.g)}</span><span class="num muted" style="font-weight:500;font-size:12px">${g.items.length}件</span></div>
+    ${g.items.map(a => `
+      <div class="act ${done.has(a.id) ? "is-done" : ""}" data-id="${a.id}">
+        <input type="checkbox" id="chk-${a.id}" ${done.has(a.id) ? "checked" : ""} aria-label="${esc(a.t)} を完了にする">
+        <div class="when">${esc(a.when)}<small>${esc(a.dur)}</small></div>
+        <div class="what"><span class="t">${esc(a.t)}</span><span class="how">${esc(a.how)}</span><span class="use">使うもの：${esc(a.use)}</span></div>
+        <div class="done"><b>終わりの目安</b>${esc(a.done)}</div>
+      </div>`).join("")}
+  </div>`).join("");
+$("#actions").addEventListener("change", ev => {
+  const row = ev.target.closest(".act"); if (!row) return;
+  ev.target.checked ? done.add(row.dataset.id) : done.delete(row.dataset.id);
+  row.classList.toggle("is-done", ev.target.checked);
+  try { localStorage.setItem(KEY + ":actions", JSON.stringify([...done])); } catch(e) {}
+});
+
+$("#madeCards").innerHTML = MADE.map((m,i) => `
+  <div class="card">
+    <h3>${esc(m.t)}</h3>
+    <div class="row"><span>使う場面</span><span>${esc(m.when)}</span></div>
+    <div class="row"><span>中身</span><span>${esc(m.what)}</span></div>
+    <div class="row"><span>状態</span><span class="state">${esc(m.state)}</span></div>
+    <div class="path"><code id="mp-${i}">${esc(m.p)}</code><button class="btn" type="button" data-copy="path" data-i="${i}">パスをコピー</button></div>
+  </div>`).join("");
+
+$("#readyRows").innerHTML = READY.map(r => `<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="muted">${esc(r[3])}</td><td>${esc(r[4])}</td></tr>`).join("");
+
+const askCard = (a,i) => `
+  <div class="ask">
+    <div class="h"><div><div class="who">${esc(a.who)} <span class="tag t-ask">${esc(a.id)}</span></div><div class="meta">${esc(a.via)}｜送る：${esc(a.sendAt)}｜期限：${esc(a.by)}</div></div>
+      <button class="btn" type="button" data-copy="ask" data-i="${i}">文面をコピー</button></div>
+    <div class="req"><b>お願いすること　</b>${esc(a.req)}</div>
+    <pre id="ask-${i}">${esc(a.text)}</pre>
+  </div>`;
+$("#asksIn").innerHTML = ASKS.map((a,i) => a.side==="in" ? askCard(a,i) : "").join("");
+$("#asksOut").innerHTML = ASKS.map((a,i) => a.side==="out" ? askCard(a,i) : "").join("");
+
+document.addEventListener("click", ev => {
+  const b = ev.target.closest("[data-copy]"); if (!b) return;
+  const i = +b.dataset.i;
+  const isAsk = b.dataset.copy === "ask";
+  const text = isAsk ? ASKS[i].text : ROOT + MADE[i].p;
+  const el = document.getElementById(isAsk ? "ask-" + i : "mp-" + i);
+  const label = b.textContent;
+  const ok = () => { b.textContent = "コピーしました"; setTimeout(() => b.textContent = label, 1600); };
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "選択しました"; setTimeout(() => b.textContent = label, 1600); };
+  try { navigator.clipboard.writeText(text).then(ok, fallback); } catch(e) { fallback(); }
+});
+
+$("#improveCols").innerHTML = IMPROVE.map(col => `
+  <div class="imp-col ${col.cls}">
+    <h3>${esc(col.h)}</h3>
+    <p>${esc(col.lead)}</p>
+    ${col.items.map(it => `<div class="ic"><span class="t">${esc(it.t)}</span><span class="need">必要なもの：${esc(it.need)}</span><span class="gain">${esc(it.gain)}</span><span class="where">効く場面・相談先：${esc(it.where)}</span></div>`).join("")}
+  </div>`).join("");
+
+$("#focus").innerHTML = FOCUS.map(f => `
+  <div class="fc"><div class="no">${f.no}</div><h3>${esc(f.t)}</h3><span class="pill p-${f.s[0]}">${esc(f.s[1])}</span>
+    <p>山場：${esc(f.w)}</p><p class="risk">${esc(f.r)}</p></div>`).join("");
+
+const FILTERS = [["all","すべて"],["you",OWNER],["made","AIが準備"],["ready","準備済み"],["ask","依頼・任せる"]];
+let cur = "all";
+try { cur = localStorage.getItem(KEY + ":filter") || "all"; } catch(e) {}
+function renderWeek(){
+  $("#filters").innerHTML = FILTERS.map(([k,l]) => `<button class="chip" type="button" id="f-${k}" data-k="${k}" aria-pressed="${k===cur}">${l}</button>`).join("");
+  $("#week").innerHTML = DAYS.map((d,di) => {
+    const rows = EV.filter(e => e[0]===di && (cur==="all" || e[3]===cur));
+    const body = rows.length ? rows.map(e => `<div class="ev st-${e[3]}"><div class="bar"></div><div class="body"><span class="tm">${esc(e[1])}</span><span class="nm">${esc(e[2])}</span><span class="nt">${ST[e[3]]}</span></div></div>`).join("")
+      : `<div class="ev"><div class="bar" style="background:transparent"></div><div class="body"><span class="nt">該当なし</span></div></div>`;
+    return `<div class="day ${d[3] ? "launch" : ""}"><div class="day-h"><b>${d[0]}<span class="muted" style="font-size:12px;font-weight:500">（${d[1]}）</span></b><span>${d[2]}</span></div>${body}</div>`;
+  }).join("");
+}
+renderWeek();
+$("#filters").addEventListener("click", ev => {
+  const b = ev.target.closest("button"); if (!b) return;
+  cur = b.dataset.k;
+  try { localStorage.setItem(KEY + ":filter", cur); } catch(e) {}
+  renderWeek();
+});
+
+$("#notes").innerHTML = NOTES.map(n => `<li><b>${esc(n[0])}</b>${esc(n[1])}</li>`).join("");
+</script>
+</html>
